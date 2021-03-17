@@ -1,6 +1,6 @@
 # 3D tic tac toe
-A 3D tic tac toe game made in Python,
-in 3d tic tac toe there are 3 boards in the terminal,
+A 3D tic tac toe game made in Python,\n
+in 3d tic tac toe there are 3 boards in the terminal,\n
 each board on screen is a layer on a 3D cube in this order \[back\] \[middle\] \[front\]
 
 # How to play
