@@ -1,5 +1,3 @@
-import time
-
 empty = ' '
 
 cube = [
@@ -152,10 +150,7 @@ while not game_over:
 
         get_input(player['symbol'])
 
-        t0 = time.time()
         player['score'] = check_win(player['symbol'])
-        t1 = time.time()
-        print('time', t1 - t0)
 
         if player['score'] >= 3:
             print(player['symbol'], 'wins')
