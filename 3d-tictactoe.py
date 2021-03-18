@@ -116,32 +116,28 @@ def check_win(player):
 
     # one layer diagonal
     for layer in cube:
-        if (player == layer[0][0] == layer[1][1] == layer[2][2]
-                or player == layer[0][2] == layer[1][1] == layer[2][0]):
-            wins += 1
+        wins += player == layer[0][0] == layer[1][1] == layer[2][2]
+        wins += player == layer[0][2] == layer[1][1] == layer[2][0]
 
     # multi layer diagonal
     for i in range(3):
-        if (player == cube[0][0][i] == cube[1][1][i] == cube[2][2][i]
-                or player == cube[0][2][i] == cube[1][1][i] == cube[2][0][i]):
-            wins += 1
+        wins += player == cube[0][0][i] == cube[1][1][i] == cube[2][2][i]
+        wins += player == cube[0][2][i] == cube[1][1][i] == cube[2][0][i]
 
     # horizontal diagonal
     for i in range(3):
-        if (player == cube[0][i][0] == cube[1][i][1] == cube[2][i][2]
-                or player == cube[2][i][0] == cube[1][i][1] == cube[0][i][2]):
-            wins += 1
+        wins += player == cube[0][i][0] == cube[1][i][1] == cube[2][i][2]
+        wins += player == cube[2][i][0] == cube[1][i][1] == cube[0][i][2]
 
     # thru opposite corners of the cube
     # top left
-    if (player == cube[0][0][0] == cube[1][1][1] == cube[2][2][2] or
-            # top right
-            player == cube[0][0][2] == cube[1][1][1] == cube[2][2][0] or
-            # bottom left
-            player == cube[0][2][0] == cube[1][1][1] == cube[2][0][2] or
-            # bottom right
-            player == cube[0][2][2] == cube[1][1][1] == cube[2][0][0]):
-        wins += 1
+    wins += player == cube[0][0][0] == cube[1][1][1] == cube[2][2][2]
+    # top right
+    wins += player == cube[0][0][2] == cube[1][1][1] == cube[2][2][0]
+    # bottom left
+    wins += player == cube[0][2][0] == cube[1][1][1] == cube[2][0][2]
+    # bottom right
+    wins += player == cube[0][2][2] == cube[1][1][1] == cube[2][0][0]
 
     return wins
 
@@ -160,3 +156,4 @@ while not game_over:
             print(player['symbol'], 'wins')
             draw()
             game_over = True
+            break
