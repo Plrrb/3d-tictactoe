@@ -79,7 +79,7 @@ def get_input(player):
     # get input for place
     while True:
         place = input_to_int(player + ' choose a place: ') - 1
-        if not 0 <= place <= 9:
+        if place >= 9 or place < 0:
             print('number out of bounds')
             continue
 
