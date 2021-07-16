@@ -56,11 +56,6 @@ def main():
 
         response = clientsocket.recv(1024).decode("ascii")
 
-        if not response:
-            print("O wins")
-            ttt.draw()
-            break
-
         response = eval(response)
 
         ttt.modify_cube(response[0], response[1], response[2], "O")

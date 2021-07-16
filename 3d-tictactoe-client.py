@@ -50,6 +50,8 @@ while True:
 
     ttt.draw()
 
+    clientsocket.send(f"({layer},{row},{col})".encode("ascii"))
+
     if ttt.players[0]["score"] >= 3:
         print("X", "wins")
         ttt.draw()
@@ -59,5 +61,3 @@ while True:
         print("O", "wins")
         ttt.draw()
         break
-
-    clientsocket.send(f"({layer},{row},{col})".encode("ascii"))
