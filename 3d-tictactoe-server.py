@@ -42,6 +42,8 @@ def main():
 
         ttt.draw()
 
+        clientsocket.send(f"({layer},{row},{col})".encode("ascii"))
+
         if ttt.players[0]["score"] >= 3:
             print("X", "wins")
             ttt.draw()
@@ -52,7 +54,6 @@ def main():
             ttt.draw()
             break
 
-        clientsocket.send(f"({layer},{row},{col})".encode("ascii"))
         response = clientsocket.recv(1024).decode("ascii")
 
         if not response:

@@ -23,11 +23,6 @@ while True:
     response = clientsocket.recv(1024).decode("ascii")
     # response will look like this: (layer, row, col)
 
-    if not response:
-        print("x wins")
-        ttt.draw()
-        break
-
     response = eval(response)
 
     ttt.modify_cube(response[0], response[1], response[2], "X")
