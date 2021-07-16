@@ -69,7 +69,7 @@ def main():
             break
 
         if ttt.players[1]["score"] >= 3:
-            print(ttt.player[1]["symbol"], "wins")
+            print(ttt.players[1]["symbol"], "wins")
             ttt.draw()
             break
 
