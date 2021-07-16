@@ -2,7 +2,7 @@ import socket
 import argparse
 from tictactoe3d import tictactoe3d
 
-ttt = tictactoe3d.tictactoe3d()
+ttt = tictactoe3d()
 
 
 parser = argparse.ArgumentParser()
@@ -17,22 +17,52 @@ clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # connection to hostname on the port.
 clientsocket.connect((args.ip, int(args.port)))
 
-(1, 1, 1)
 
 while True:
     # Receive no more than 1024 bytes
     response = clientsocket.recv(1024).decode("ascii")
     # response will look like this: (layer, row, col)
+
+    if not response:
+        print("x wins")
+        ttt.draw()
+        break
+
     response = eval(response)
 
-    ttt.modify_cube(response[0], response[1], response[2])
+    ttt.modify_cube(response[0], response[1], response[2], "X")
 
-    print(response)
+    ttt.players[0]["score"] = ttt.check_win("X")
+    ttt.players[1]["score"] = ttt.check_win("O")
 
-    inp = ttt.get_input("O")
+    ttt.draw()
 
-    clientsocket.send(inp.encode("ascii"))
-
-    if response.rstrip("\n") == "END" or inp.rstrip("\n") == "END":
-        print("ending")
+    if ttt.players[0]["score"] >= 3:
+        print("X", "wins")
+        ttt.draw()
         break
+
+    if ttt.players[1]["score"] >= 3:
+        print("O", "wins")
+        ttt.draw()
+        break
+
+    layer, row, col = ttt.get_input("O")
+    ttt.modify_cube(layer, row, col, "O")
+
+    ttt.players[0]["score"] = ttt.check_win("X")
+    ttt.players[1]["score"] = ttt.check_win("O")
+
+    ttt.draw()
+
+    if ttt.players[0]["score"] >= 3:
+        print("X", "wins")
+        ttt.draw()
+        break
+
+    if ttt.players[1]["score"] >= 3:
+        print("O", "wins")
+        ttt.draw()
+        break
+
+    clientsocket.send(f"({layer},{row},{col})".encode("ascii"))

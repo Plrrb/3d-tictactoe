@@ -63,13 +63,11 @@ class tictactoe3d:
                 print("number out of bounds")
                 continue
 
-            if not self.is_layer_full(layer):
-                break
-            else:
+            if self.is_layer_full(layer):
                 print("that layer is full")
+                continue
 
-        # get input for place
-        while True:
+            # get input for place
             place = self.input_to_int(player + " choose a place: ") - 1
             if place >= 9 or place < 0:
                 print("number out of bounds")
@@ -78,16 +76,12 @@ class tictactoe3d:
             row = place // 3
             index = place % 3
 
-            if self.modify_cube(layer, row, index):
-                break
+            if self.cube[layer][row][index] == self.empty:
+                return layer, row, index
+            print("that place is taken")
 
     def modify_cube(self, layer, row, col, player):
-        if self.cube[layer][row][col] == self.empty:
-            self.cube[layer][row][col] = player
-            return True
-        else:
-            print("that place is taken")
-            return False
+        self.cube[layer][row][col] = player
 
     def check_win(self, player):
         wins = 0

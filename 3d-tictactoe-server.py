@@ -9,7 +9,7 @@ print(ttt.cube)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--port", help="its the port number", required=True)
-parser.add_argument("--ip", help="its the ipaddress")
+
 
 args = parser.parse_args()
 print(args)
@@ -18,6 +18,7 @@ print(args)
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # bind to the port
+print(socket.gethostname())
 serversocket.bind((socket.gethostname(), int(args.port)))
 serversocket.listen(5)
 
@@ -29,19 +30,52 @@ def main():
     game_over = False
 
     while not game_over:
-        for player in ttt.players:
 
+        ttt.draw()
+
+        layer, row, col = ttt.get_input("X")
+
+        ttt.modify_cube(layer, row, col, "X")
+
+        ttt.players[1]["score"] = ttt.check_win("O")
+        ttt.players[0]["score"] = ttt.check_win("X")
+
+        ttt.draw()
+
+        if ttt.players[0]["score"] >= 3:
+            print("X", "wins")
             ttt.draw()
+            break
 
-            ttt.get_input(player["symbol"])
+        if ttt.players[1]["score"] >= 3:
+            print(ttt.player[1]["symbol"], "wins")
+            ttt.draw()
+            break
 
-            player["score"] = ttt.check_win(player["symbol"])
+        clientsocket.send(f"({layer},{row},{col})".encode("ascii"))
+        response = clientsocket.recv(1024).decode("ascii")
 
-            if player["score"] >= 3:
-                print(player["symbol"], "wins")
-                ttt.draw()
-                game_over = True
-                break
+        if not response:
+            print("O wins")
+            ttt.draw()
+            break
+
+        response = eval(response)
+
+        ttt.modify_cube(response[0], response[1], response[2], "O")
+
+        ttt.players[0]["score"] = ttt.check_win("X")
+        ttt.players[1]["score"] = ttt.check_win("O")
+
+        if ttt.players[0]["score"] >= 3:
+            print("X", "wins")
+            ttt.draw()
+            break
+
+        if ttt.players[1]["score"] >= 3:
+            print(ttt.player[1]["symbol"], "wins")
+            ttt.draw()
+            break
 
 
 main()
