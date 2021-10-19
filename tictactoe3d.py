@@ -1,6 +1,5 @@
 class tictactoe3d:
     def __init__(self):
-
         self.empty = " "
 
         self.cube = [
@@ -50,7 +49,7 @@ class tictactoe3d:
             try:
                 inp = int(inp)
                 break
-            except:
+            except ValueError:
                 print("not a number")
 
         return inp
@@ -82,6 +81,25 @@ class tictactoe3d:
 
     def modify_cube(self, layer, row, col, player):
         self.cube[layer][row][col] = player
+
+    def local_run(self):
+        game_over = False
+
+        while not game_over:
+            for player in self.players:
+
+                self.draw()
+
+                layer, row, col = self.get_input(player["symbol"])
+                self.modify_cube(layer, row, col, player["symbol"])
+
+                player["score"] = self.check_win(player["symbol"])
+
+                if player["score"] >= 3:
+                    print(player["symbol"], "wins")
+                    self.draw()
+                    game_over = True
+                    break
 
     def check_win(self, player):
         wins = 0
@@ -145,24 +163,10 @@ class tictactoe3d:
         return wins
 
 
-# def main():
-#     game_over = False
-
-#     while not game_over:
-#         for player in players:
-
-#             draw()
-
-#             get_input(player["symbol"])
-
-#             player["score"] = check_win(player["symbol"])
-
-#             if player["score"] >= 3:
-#                 print(player["symbol"], "wins")
-#                 draw()
-#                 game_over = True
-#                 break
+def main():
+    game = tictactoe3d()
+    game.local_run()
 
 
-# if __name__ == "__main__":
-# main()
+if __name__ == "__main__":
+    main()
