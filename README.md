@@ -13,13 +13,13 @@ the first player to 3 tic tac toe's wins
 Run the 3d-tictactoe-server.py on one computer
 
 ```
-python3 3d-tictactoe-server.py --port \<port\>
+python3 3d-tictactoe-server.py --port <port>
 ```
 
 run the 3d-tictactoe-client.py on another computer
 
 ```
-python3 3d-tictactoe-client.py --port \<port\> --ip \<servers ip\>
+python3 3d-tictactoe-client.py --port <port> --ip <servers ip>
 ```
 
 # how to play locally
